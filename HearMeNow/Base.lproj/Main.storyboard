@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="HearMeNow" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,8 +16,49 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hear me now..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6TS-Cb-1aN">
+                                <rect key="frame" x="16" y="20" width="568" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aRR-Ck-Bpz">
+                                <rect key="frame" x="16" y="84" width="568" height="30"/>
+                                <state key="normal" title="Record">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="PBI-4A-D5U"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQT-wD-X6v">
+                                <rect key="frame" x="16" y="135" width="568" height="30"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="playPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Ms5-ih-AAj"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aRR-Ck-Bpz" firstAttribute="leading" secondItem="YQT-wD-X6v" secondAttribute="leading" id="4Fe-ad-1LB"/>
+                            <constraint firstItem="aRR-Ck-Bpz" firstAttribute="top" secondItem="6TS-Cb-1aN" secondAttribute="bottom" constant="43" id="C3a-pa-D1Y"/>
+                            <constraint firstItem="YQT-wD-X6v" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="J4Z-So-sCK"/>
+                            <constraint firstItem="aRR-Ck-Bpz" firstAttribute="trailing" secondItem="6TS-Cb-1aN" secondAttribute="trailing" id="PXi-SU-h2l"/>
+                            <constraint firstItem="YQT-wD-X6v" firstAttribute="trailing" secondItem="aRR-Ck-Bpz" secondAttribute="trailing" id="T9T-jS-Kgf"/>
+                            <constraint firstItem="YQT-wD-X6v" firstAttribute="top" secondItem="aRR-Ck-Bpz" secondAttribute="bottom" constant="21" id="Wyl-Nf-IXl"/>
+                            <constraint firstItem="aRR-Ck-Bpz" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="hlv-sF-OiC"/>
+                            <constraint firstItem="6TS-Cb-1aN" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="qWs-83-P4L"/>
+                            <constraint firstItem="aRR-Ck-Bpz" firstAttribute="leading" secondItem="6TS-Cb-1aN" secondAttribute="leading" id="ydE-Em-4fc"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="playButton" destination="YQT-wD-X6v" id="xRP-T0-yVq"/>
+                        <outlet property="recordButton" destination="aRR-Ck-Bpz" id="KNE-Zk-T6a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
