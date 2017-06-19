@@ -19,33 +19,33 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
-    @IBAction func recordPressed(sender: AnyObject) {
-        if(soundRecorder?.recording == true) {
+    @IBAction func recordPressed(_ sender: AnyObject) {
+        if(soundRecorder?.isRecording == true) {
             soundRecorder?.stop()
-            recordButton.setTitle("Record", forState: UIControlState.Normal)
+            recordButton.setTitle("Record", for: UIControlState())
             hasRecording = true
         } else {
             session?.requestRecordPermission(){
                 granted in
                 if(granted == true) {
                     self.soundRecorder?.record()
-                    self.recordButton.setTitle("Stop", forState: UIControlState.Normal)
+                    self.recordButton.setTitle("Stop", for: UIControlState())
                 } else {
-                    println("Unable to record")
+                    print("Unable to record")
                 }
             }
         }
     }
     
-    @IBAction func playPressed(sender: AnyObject) {
-        if(soundPlayer?.playing == true) {
+    @IBAction func playPressed(_ sender: AnyObject) {
+        if(soundPlayer?.isPlaying == true) {
             soundPlayer?.pause()
-            playButton.setTitle("Play", forState: UIControlState.Normal)
+            playButton.setTitle("Play", for: UIControlState())
         } else if ( hasRecording == true ) {
-            let url = NSURL(fileURLWithPath: soundPath!)
-            var error : NSError?
+            let url = URL(fileURLWithPath: soundPath!)
+            let error : NSError?
             
-            soundPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
+            soundPlayer = try? AVAudioPlayer(contentsOf: url)
             
             if (error == nil) {
                 soundPlayer?.delegate = self
@@ -53,22 +53,22 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
                 soundPlayer?.rate = 0.5
                 soundPlayer?.play()
             } else {
-                println("Error initializing player \(error)")
+                print("Error initializing player \(error)")
             }
-            playButton.setTitle("Pause", forState: UIControlState.Normal)
+            playButton.setTitle("Pause", for: UIControlState())
             hasRecording = false
         } else if (soundPlayer != nil) {
             soundPlayer?.play()
-            playButton.setTitle("Pause", forState: UIControlState.Normal)
+            playButton.setTitle("Pause", for: UIControlState())
         }
     }
     
-    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
-        recordButton.setTitle("Record", forState: UIControlState.Normal)
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        recordButton.setTitle("Record", for: UIControlState())
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
-        playButton.setTitle("Play", forState: UIControlState.Normal)
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        playButton.setTitle("Play", for: UIControlState())
     }
     
     override func viewDidLoad() {
@@ -76,19 +76,19 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
         
         soundPath = "\(NSTemporaryDirectory())hearmenow.wav"
         
-        let url = NSURL(fileURLWithPath: soundPath!)
+        let url = URL(fileURLWithPath: soundPath!)
         
         session = AVAudioSession.sharedInstance()
-        session?.setActive(true, error: nil)
+        try? session?.setActive(true)
         
-        var error : NSError?
+        let error : NSError?
         
-        session?.setCategory(AVAudioSessionCategoryPlayAndRecord, error: &error)
+        try? session?.setCategory(AVAudioSessionCategoryPlayAndRecord)
         
-        soundRecorder = AVAudioRecorder(URL: url, settings: nil, error: &error)
+        try? soundRecorder = AVAudioRecorder(url: url, settings: [:])
         
         if  (error != nil) {
-            println("Error initializing the recorder: \(error)")
+            print("Error initializing the recorder: \(error)")
         }
         
         soundRecorder?.delegate = self
